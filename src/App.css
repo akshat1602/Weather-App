@@ -1,0 +1,70 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 36px 16px 60px;
+  transition: background 0.6s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.App::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.35), transparent 55%);
+  opacity: 0.9;
+}
+
+.weather-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.weather-title {
+  font-size: 2.15rem;
+  font-weight: 800;
+  margin-bottom: 26px;
+  color: #0f172a;
+  letter-spacing: -0.6px;
+}
+
+.theme-default {
+  background: linear-gradient(135deg, #eaf2ff 0%, #f8fbff 45%, #ffffff 100%);
+}
+
+.theme-hot {
+  background: linear-gradient(135deg, #fff1dc 0%, #ffe1b8 45%, #ffd1a1 100%);
+}
+
+.theme-cold {
+  background: linear-gradient(135deg, #dff3ff 0%, #cceaff 45%, #b9dbff 100%);
+}
+
+.theme-cloudy {
+  background: linear-gradient(135deg, #edf2f7 0%, #dfe7f0 45%, #cfd8e3 100%);
+}
+
+.theme-rain {
+  background: linear-gradient(135deg, #dce7f5 0%, #c5d6ea 45%, #aebfd7 100%);
+}
+
+@media (max-width: 600px) {
+  .App {
+    padding: 24px 12px 40px;
+  }
+
+  .weather-shell {
+    max-width: 100%;
+  }
+
+  .weather-title {
+    font-size: 1.8rem;
+    margin-bottom: 18px;
+  }
+}

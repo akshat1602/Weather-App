@@ -1,0 +1,94 @@
+.InfoBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.cardContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.weather-card.MuiCard-root {
+  width: 100%;
+  max-width: 370px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+}
+
+.weather-card.MuiCard-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+}
+
+.weather-card.MuiCard-root:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.18);
+}
+
+.weather-image.MuiCardMedia-root {
+  height: 180px;
+}
+
+.weather-content.MuiCardContent-root {
+  padding: 22px 20px 24px;
+}
+
+.weather-content .MuiTypography-h5 {
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.weather-content .MuiTypography-body2 {
+  color: #475569;
+  line-height: 1.85;
+  font-size: 0.98rem;
+}
+
+.weather-content .MuiSvgIcon-root {
+  vertical-align: middle;
+  font-size: 1.2rem;
+}
+
+.card-hot {
+  background: linear-gradient(180deg, rgba(255, 243, 224, 0.95) 0%, rgba(255, 255, 255, 1) 35%);
+}
+
+.card-cold {
+  background: linear-gradient(180deg, rgba(225, 245, 254, 0.95) 0%, rgba(255, 255, 255, 1) 35%);
+}
+
+.card-cloudy {
+  background: linear-gradient(180deg, rgba(241, 245, 249, 0.95) 0%, rgba(255, 255, 255, 1) 35%);
+}
+
+.card-rain {
+  background: linear-gradient(180deg, rgba(226, 232, 240, 0.96) 0%, rgba(255, 255, 255, 1) 35%);
+}
+
+.card-default {
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.98) 0%, rgba(255, 255, 255, 1) 35%);
+}
+
+@media (max-width: 600px) {
+  .weather-card.MuiCard-root {
+    max-width: 100%;
+  }
+
+  .weather-image.MuiCardMedia-root {
+    height: 160px;
+  }
+
+  .weather-content.MuiCardContent-root {
+    padding: 20px 16px 22px;
+  }
+}
