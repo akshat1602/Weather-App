@@ -7,7 +7,7 @@ import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import SunnyIcon from "@mui/icons-material/Sunny";
 import "./InfoBox.css";
 
-export default function InfoBox({ info }) {
+export default function InfoBox({ info, loading }) {
   const HOT_URL =
     "https://images.unsplash.com/uploads/14121010130570e22bcdf/e1730efe?q=80&w=1170&auto=format&fit=crop";
   const COLD_URL =
@@ -46,26 +46,35 @@ export default function InfoBox({ info }) {
     <div className="InfoBox">
       <div className="cardContainer">
         <Card className={`weather-card ${getCardThemeClass()}`}>
-          <CardMedia
-            className="weather-image"
-            image={backgroundImage}
-            title="weather"
-          />
-          <CardContent className="weather-content">
-            <Typography gutterBottom variant="h5" component="div">
-              {info.city} {weatherIcon}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" component="span">
-              <div>Temperature = {info.temp}&deg;C</div>
-              <div>Humidity = {info.humidity}%</div>
-              <div>Min Temp = {info.tempMin}&deg;C</div>
-              <div>Max Temp = {info.tempMax}&deg;C</div>
-              <div>
-                The weather can be described as <i>{info.weather}</i> and feels like ={" "}
-                {info.feelsLike}&deg;C
-              </div>
-            </Typography>
-          </CardContent>
+          {loading ? (
+            <CardContent className="weather-content">
+              <Typography variant="h6">Loading weather...</Typography>
+            </CardContent>
+          ) : (
+            <>
+              <CardMedia
+                className="weather-image"
+                image={backgroundImage}
+                title="weather"
+              />
+              <CardContent className="weather-content">
+                <Typography gutterBottom variant="h5" component="div">
+                  {info.city} {weatherIcon}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" component="span">
+                  <div>Temperature = {info.temp}&deg;C</div>
+                  <div>Humidity = {info.humidity}%</div>
+                  <div>Wind Speed = {info.windSpeed} m/s</div>
+                  <div>Min Temp = {info.tempMin}&deg;C</div>
+                  <div>Max Temp = {info.tempMax}&deg;C</div>
+                  <div>
+                    The weather can be described as <i>{info.weather}</i> and feels like ={" "}
+                    {info.feelsLike}&deg;C
+                  </div>
+                </Typography>
+              </CardContent>
+            </>
+          )}
         </Card>
       </div>
     </div>

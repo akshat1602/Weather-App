@@ -21,14 +21,6 @@
   position: relative;
 }
 
-.weather-card.MuiCard-root::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.18;
-}
-
 .weather-card.MuiCard-root:hover {
   transform: translateY(-3px);
   box-shadow: 0 20px 48px rgba(15, 23, 42, 0.18);

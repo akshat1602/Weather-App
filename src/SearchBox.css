@@ -1,6 +1,6 @@
 .SearchBox {
   width: 100%;
-  margin-bottom: 28px;
+  margin-bottom: 22px;
 }
 
 .SearchBox form {
@@ -21,26 +21,33 @@
   border-radius: 12px;
 }
 
+.buttonRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .SearchBox .MuiButton-root {
-  width: 165px;
+  min-width: 160px;
   padding: 10px 18px;
   border-radius: 12px;
   text-transform: none;
   font-weight: 700;
+}
+
+.SearchBox .MuiButton-contained {
   background: linear-gradient(135deg, #2563eb, #3b82f6);
   box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.SearchBox .MuiButton-root:hover {
+.SearchBox .MuiButton-contained:hover {
   background: linear-gradient(135deg, #1d4ed8, #2563eb);
-  transform: translateY(-1px);
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.34);
 }
 
-.SearchBox .MuiButton-root:disabled {
-  opacity: 0.75;
-  color: white;
+.SearchBox .MuiButton-outlined {
+  border-color: rgba(59, 130, 246, 0.45);
+  color: #1d4ed8;
 }
 
 .error-text {
@@ -48,4 +55,36 @@
   font-size: 0.95rem;
   font-weight: 500;
   margin-top: -2px;
+}
+
+.recentSearches {
+  width: 100%;
+  max-width: 330px;
+  text-align: left;
+  color: #334155;
+}
+
+.recentSearches p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  color: #1d4ed8;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.chip:hover {
+  background: #eff6ff;
 }
