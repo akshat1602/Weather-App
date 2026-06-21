@@ -1,6 +1,6 @@
 # Weather-App
 
-Weather-App is a responsive React weather app built with Vite and Material UI. It lets users search any city or use their current location to view live weather data from the OpenWeather API in a clean and modern interface.
+Weather-App is a responsive React weather application built with Vite and Material UI. It lets users search any city or use their current location to view live weather data from the OpenWeather API in a clean and modern interface.
 
 ## Live Demo
 
@@ -125,7 +125,7 @@ The app uses OpenWeather current weather data, including:
 - minimum temperature,
 - maximum temperature,
 - feels-like temperature,
-- weather description. [web:500][web:426][web:505]
+- weather description. [web:500][web:398][web:542]
 
 ## Notes
 
