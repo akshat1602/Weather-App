@@ -9,6 +9,7 @@ export default function SearchBox({
   setLoading,
   loading,
   recentSearches,
+  setRecentSearches,
 }) {
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
@@ -36,13 +37,23 @@ export default function SearchBox({
     };
   };
 
+  const saveRecentSearch = (cityName) => {
+    if (!cityName) return;
+    setRecentSearches((prev) => {
+      const updated = [cityName, ...prev.filter((item) => item !== cityName)].slice(0, 5);
+      localStorage.setItem("recentSearches", JSON.stringify(updated));
+      return updated;
+    });
+    onSearch(cityName);
+  };
+
   const searchWeather = async (cityName) => {
     setError("");
     setLoading(true);
     try {
       const newInfo = await getWeatherInfoByCity(cityName);
       updateInfo(newInfo);
-      onSearch(newInfo.city);
+      saveRecentSearch(newInfo.city);
       setCity("");
     } catch (err) {
       setError("No such place exists!");
@@ -91,7 +102,7 @@ export default function SearchBox({
           };
 
           updateInfo(newInfo);
-          onSearch(newInfo.city);
+          saveRecentSearch(newInfo.city);
         } catch (err) {
           setError("Could not fetch weather for your location.");
         } finally {
@@ -103,6 +114,11 @@ export default function SearchBox({
         setLoading(false);
       }
     );
+  };
+
+  const clearRecentSearches = () => {
+    setRecentSearches([]);
+    localStorage.removeItem("recentSearches");
   };
 
   return (
@@ -122,7 +138,12 @@ export default function SearchBox({
             {loading ? "Searching..." : "Search"}
           </Button>
 
-          <Button variant="outlined" type="button" onClick={useMyLocation} disabled={loading}>
+          <Button
+            variant="outlined"
+            type="button"
+            onClick={useMyLocation}
+            disabled={loading}
+          >
             Use My Location
           </Button>
         </div>
@@ -131,7 +152,17 @@ export default function SearchBox({
 
         {recentSearches.length > 0 && (
           <div className="recentSearches">
-            <p>Recent searches:</p>
+            <div className="recentHeader">
+              <p>Recent searches:</p>
+              <button
+                type="button"
+                className="clearBtn"
+                onClick={clearRecentSearches}
+              >
+                Clear
+              </button>
+            </div>
+
             <div className="chips">
               {recentSearches.map((item) => (
                 <button

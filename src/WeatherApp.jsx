@@ -57,6 +57,7 @@ export default function WeatherApp() {
           setLoading={setLoading}
           loading={loading}
           recentSearches={recentSearches}
+          setRecentSearches={setRecentSearches}
         />
         <InfoBox info={weatherInfo} loading={loading} />
       </div>

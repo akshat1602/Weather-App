@@ -88,3 +88,20 @@
 .chip:hover {
   background: #eff6ff;
 }
+
+.recentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.clearBtn {
+  border: none;
+  background: transparent;
+  color: #dc2626;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0;
+}
