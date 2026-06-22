@@ -6,12 +6,6 @@ Weather-App is a responsive React weather application built with Vite and Materi
 
 [View the live app](https://akshat1602.github.io/Weather-App/)
 
-## Repository Details
-
-This repository contains a weather application that fetches live weather data and displays it in a visually appealing card layout. The app updates its styling based on weather conditions and stores recent searches in the browser for a smoother user experience.
-
-It is a small but polished project that demonstrates API integration, state management, local storage, geolocation, and responsive UI design.
-
 ## Features
 
 - Search weather by city name.
@@ -19,7 +13,10 @@ It is a small but polished project that demonstrates API integration, state mana
 - Display temperature in Celsius.
 - Show humidity, wind speed, min temp, max temp, and feels-like temperature.
 - Dynamic weather-based card styling and background.
+- Dark mode and light mode support.
 - Recent searches saved in local storage.
+- Clear recent search history.
+- 5-day weather forecast.
 - Loading state while fetching data.
 - Error messages for invalid cities or location issues.
 - Responsive design for desktop and mobile.
@@ -74,7 +71,9 @@ npm run dev
 1. Open the app in your browser.
 2. Enter a city name and click **Search**, or click **Use My Location**.
 3. View the weather details for that place.
-4. Click any recent search chip to quickly open that city again.
+4. Switch between dark mode and light mode using the theme toggle.
+5. Click any recent search chip to quickly open that city again.
+6. Use the clear history button to remove saved recent searches.
 
 ## Build for Production
 
@@ -103,6 +102,8 @@ src/
   WeatherApp.jsx
   SearchBox.jsx
   SearchBox.css
+  ForecastBox.jsx
+  ForecastBox.css
   InfoBox.jsx
   InfoBox.css
   index.css
@@ -117,7 +118,7 @@ This project uses one environment variable:
 
 ## API Data Used
 
-The app uses OpenWeather current weather data, including:
+The app uses OpenWeather current weather data and forecast data, including:
 - city name,
 - temperature,
 - humidity,
@@ -125,7 +126,8 @@ The app uses OpenWeather current weather data, including:
 - minimum temperature,
 - maximum temperature,
 - feels-like temperature,
-- weather description. [web:500][web:398][web:542]
+- weather description,
+- 5-day forecast grouped from 3-hour forecast data. [web:220][web:704][web:564]
 
 ## Notes
 
@@ -133,3 +135,10 @@ The app uses OpenWeather current weather data, including:
 - If you change your GitHub repository name, update the `base` path in `vite.config.js`.
 - Make sure the OpenWeather API key is active before running the app.
 - If geolocation is blocked by the browser, the location feature may not work.
+- The 5-day forecast is built from OpenWeather’s 3-hour step forecast data, so it is summarized into daily cards. [web:704][web:564][web:643]
+
+## Preview
+
+<img width="1891" height="908" alt="image" src="https://github.com/user-attachments/assets/e8cbf007-fdb1-4312-8b09-59889b69b173" />
+
+<img width="1893" height="911" alt="image" src="https://github.com/user-attachments/assets/d2ca02e5-babe-42a0-ae70-ac32de71ee71" />
