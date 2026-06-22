@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SearchBox from "./SearchBox";
 import InfoBox from "./InfoBox";
+import ForecastBox from "./ForecastBox";
 import "./App.css";
 
 const defaultWeather = {
@@ -78,6 +79,7 @@ export default function WeatherApp() {
         />
 
         <InfoBox info={weatherInfo} loading={loading} />
+        <ForecastBox city={weatherInfo.city} />
       </div>
     </div>
   );
