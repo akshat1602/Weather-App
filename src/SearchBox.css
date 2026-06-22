@@ -1,92 +1,168 @@
-.SearchBox {
+.searchCard {
   width: 100%;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
+  padding: 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-.SearchBox form {
+.searchForm {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
   align-items: center;
-  gap: 16px;
 }
 
-.SearchBox .MuiTextField-root {
-  width: 100%;
-  max-width: 330px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-}
-
-.SearchBox .MuiOutlinedInput-root {
-  border-radius: 12px;
-}
-
-.buttonRow {
+.searchInputWrap {
+  position: relative;
+  flex: 1;
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
 }
 
-.SearchBox .MuiButton-root {
-  min-width: 160px;
-  padding: 10px 18px;
-  border-radius: 12px;
-  text-transform: none;
-  font-weight: 700;
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  color: rgba(71, 85, 105, 0.75);
+  font-size: 1.05rem;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.SearchBox .MuiButton-contained {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
-  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
-}
-
-.SearchBox .MuiButton-contained:hover {
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
-}
-
-.SearchBox .MuiButton-outlined {
-  border-color: rgba(59, 130, 246, 0.45);
-  color: #1d4ed8;
-}
-
-.error-text {
-  color: #dc2626;
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin-top: -2px;
-}
-
-.recentSearches {
+.searchInput {
   width: 100%;
-  max-width: 330px;
-  text-align: left;
-  color: #334155;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(255, 255, 255, 0.55);
+  color: #0f172a;
+  padding: 13px 48px 13px 40px;
+  border-radius: 16px;
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.25s ease;
 }
 
-.recentSearches p {
+.searchInput::placeholder {
+  color: rgba(100, 116, 139, 0.9);
+}
+
+.searchInput:focus {
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.clearBtn {
+  position: absolute;
+  right: 10px;
+  z-index: 5;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: rgba(71, 85, 105, 0.95);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.clearIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.clearBtn:hover {
+  color: #0f172a;
+}
+
+.searchBtn {
+  border: none;
+  border-radius: 16px;
+  padding: 13px 16px;
+  background: #1d4ed8;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 104px;
+}
+
+.searchBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.recentWrap {
+  margin-top: 14px;
+  text-align: left;
+}
+
+.recentTitle {
+  font-size: 0.85rem;
+  color: rgba(71, 85, 105, 0.85);
   margin-bottom: 8px;
   font-weight: 600;
 }
 
-.chips {
+.recentList {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.chip {
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  background: rgba(255, 255, 255, 0.9);
-  color: #1d4ed8;
-  padding: 7px 12px;
+.recentChip {
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(255, 255, 255, 0.4);
+  color: #0f172a;
   border-radius: 999px;
+  padding: 8px 12px;
   cursor: pointer;
-  font-size: 0.9rem;
 }
 
-.chip:hover {
-  background: #eff6ff;
+body.dark .searchCard {
+  background: rgba(15, 23, 42, 0.48);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+}
+
+body.dark .searchIcon,
+body.dark .clearBtn,
+body.dark .recentTitle {
+  color: rgba(226, 232, 240, 0.82);
+}
+
+body.dark .searchInput {
+  background: rgba(30, 41, 59, 0.72);
+  color: #f8fafc;
+  border-color: rgba(148, 163, 184, 0.18);
+}
+
+body.dark .searchInput::placeholder {
+  color: rgba(203, 213, 225, 0.72);
+}
+
+body.dark .searchInput:focus {
+  background: rgba(30, 41, 59, 0.88);
+  border-color: rgba(96, 165, 250, 0.7);
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
+}
+
+body.dark .recentChip {
+  background: rgba(30, 41, 59, 0.72);
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.16);
+}
+
+@media (max-width: 600px) {
+  .searchForm {
+    flex-direction: column;
+  }
+
+  .searchBtn {
+    width: 100%;
+  }
 }
 
 .recentHeader {
@@ -94,14 +170,28 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  gap: 12px;
 }
 
-.clearBtn {
+.clearHistoryBtn {
   border: none;
   background: transparent;
-  color: #dc2626;
+  color: #2563eb;
+  font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0;
+  padding: 4px 0;
+  white-space: nowrap;
+}
+
+.clearHistoryBtn:hover {
+  text-decoration: underline;
+}
+
+body.dark .clearHistoryBtn {
+  color: #93c5fd;
+}
+
+body.dark .clearHistoryBtn:hover {
+  color: #bfdbfe;
 }

@@ -1,6 +1,4 @@
 import { useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import "./SearchBox.css";
 
 export default function SearchBox({
@@ -8,177 +6,123 @@ export default function SearchBox({
   onSearch,
   setLoading,
   loading,
-  recentSearches,
+  recentSearches = [],
   setRecentSearches,
 }) {
   const [city, setCity] = useState("");
-  const [error, setError] = useState("");
-
-  const API_URL = "https://api.openweathermap.org/data/2.5/weather";
   const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-  const getWeatherInfoByCity = async (cityName) => {
-    const response = await fetch(
-      `${API_URL}?q=${cityName}&appid=${API_KEY}&units=metric`
-    );
+  const fetchWeather = async (searchCity) => {
+    if (!searchCity.trim()) return;
 
-    if (!response.ok) throw new Error("City not found");
-
-    const data = await response.json();
-    return {
-      city: data.name,
-      temp: data.main.temp,
-      tempMin: data.main.temp_min,
-      tempMax: data.main.temp_max,
-      humidity: data.main.humidity,
-      feelsLike: data.main.feels_like,
-      windSpeed: data.wind?.speed ?? 0,
-      weather: data.weather[0].description,
-    };
-  };
-
-  const saveRecentSearch = (cityName) => {
-    if (!cityName) return;
-    setRecentSearches((prev) => {
-      const updated = [cityName, ...prev.filter((item) => item !== cityName)].slice(0, 5);
-      localStorage.setItem("recentSearches", JSON.stringify(updated));
-      return updated;
-    });
-    onSearch(cityName);
-  };
-
-  const searchWeather = async (cityName) => {
-    setError("");
     setLoading(true);
     try {
-      const newInfo = await getWeatherInfoByCity(cityName);
-      updateInfo(newInfo);
-      saveRecentSearch(newInfo.city);
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${API_KEY}&units=metric`
+      );
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || "City not found");
+
+      updateInfo({
+        city: data.name,
+        feelsLike: data.main.feels_like,
+        temp: data.main.temp,
+        tempMin: data.main.temp_min,
+        tempMax: data.main.temp_max,
+        humidity: data.main.humidity,
+        windSpeed: data.wind.speed,
+        weather: data.weather[0].main,
+      });
+
+      onSearch?.(data.name);
       setCity("");
     } catch (err) {
-      setError("No such place exists!");
+      alert(err.message || "Failed to fetch weather");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    if (!city.trim()) {
-      setError("Please enter a city name.");
-      return;
-    }
-    await searchWeather(city.trim());
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchWeather(city);
   };
 
-  const useMyLocation = async () => {
-    setError("");
-    if (!navigator.geolocation) {
-      setError("Geolocation is not supported by your browser.");
-      return;
-    }
-
-    setLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const { latitude, longitude } = position.coords;
-          const response = await fetch(
-            `${API_URL}?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
-          );
-
-          if (!response.ok) throw new Error("Location weather failed");
-
-          const data = await response.json();
-          const newInfo = {
-            city: data.name,
-            temp: data.main.temp,
-            tempMin: data.main.temp_min,
-            tempMax: data.main.temp_max,
-            humidity: data.main.humidity,
-            feelsLike: data.main.feels_like,
-            windSpeed: data.wind?.speed ?? 0,
-            weather: data.weather[0].description,
-          };
-
-          updateInfo(newInfo);
-          saveRecentSearch(newInfo.city);
-        } catch (err) {
-          setError("Could not fetch weather for your location.");
-        } finally {
-          setLoading(false);
-        }
-      },
-      () => {
-        setError("Location access denied.");
-        setLoading(false);
-      }
-    );
+  const handleRecentClick = (item) => {
+    setCity(item);
+    fetchWeather(item);
   };
 
-  const clearRecentSearches = () => {
+  const clearRecentHistory = () => {
     setRecentSearches([]);
     localStorage.removeItem("recentSearches");
   };
 
   return (
-    <div className="SearchBox">
-      <form onSubmit={handleSubmit}>
-        <TextField
-          id="city"
-          label="City Name"
-          variant="outlined"
-          required
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-
-        <div className="buttonRow">
-          <Button variant="contained" type="submit" disabled={loading}>
-            {loading ? "Searching..." : "Search"}
-          </Button>
-
-          <Button
-            variant="outlined"
-            type="button"
-            onClick={useMyLocation}
-            disabled={loading}
-          >
-            Use My Location
-          </Button>
+    <div className="searchCard">
+      <form className="searchForm" onSubmit={handleSubmit}>
+        <div className="searchInputWrap">
+          <span className="searchIcon">⌕</span>
+          <input
+            className="searchInput"
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="Search city..."
+            aria-label="Search city"
+          />
+          {city && (
+            <button
+              type="button"
+              className="clearBtn"
+              onClick={() => setCity("")}
+              aria-label="Clear search"
+            >
+              <svg viewBox="0 0 24 24" className="clearIcon" aria-hidden="true">
+                <path
+                  d="M18 6L6 18M6 6l12 12"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          )}
         </div>
 
-        {error && <p className="error-text">{error}</p>}
-
-        {recentSearches.length > 0 && (
-          <div className="recentSearches">
-            <div className="recentHeader">
-              <p>Recent searches:</p>
-              <button
-                type="button"
-                className="clearBtn"
-                onClick={clearRecentSearches}
-              >
-                Clear
-              </button>
-            </div>
-
-            <div className="chips">
-              {recentSearches.map((item) => (
-                <button
-                  key={item}
-                  type="button"
-                  className="chip"
-                  onClick={() => searchWeather(item)}
-                  disabled={loading}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        <button className="searchBtn" type="submit" disabled={loading}>
+          {loading ? "Searching..." : "Search"}
+        </button>
       </form>
+
+      {recentSearches.length > 0 && (
+        <div className="recentWrap">
+          <div className="recentHeader">
+            <p className="recentTitle">Recent</p>
+            <button
+              type="button"
+              className="clearHistoryBtn"
+              onClick={clearRecentHistory}
+            >
+              Clear history
+            </button>
+          </div>
+
+          <div className="recentList">
+            {recentSearches.map((item) => (
+              <button
+                key={item}
+                type="button"
+                className="recentChip"
+                onClick={() => handleRecentClick(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -21,10 +21,18 @@ export default function WeatherApp() {
     return saved ? JSON.parse(saved) : [];
   });
   const [loading, setLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
 
   useEffect(() => {
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
   }, [recentSearches]);
+
+  useEffect(() => {
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+    document.body.classList.toggle("dark", darkMode);
+  }, [darkMode]);
 
   const addRecentSearch = (city) => {
     if (!city) return;
@@ -48,9 +56,18 @@ export default function WeatherApp() {
   };
 
   return (
-    <div className={`App ${getThemeClass()}`}>
+    <div className={`App ${darkMode ? "dark-app" : ""} ${getThemeClass()}`}>
       <div className="weather-shell">
-        <h2 className="weather-title">Weather App</h2>
+        <div className="topRow">
+          <h2 className="weather-title">Weather App</h2>
+          <button
+            className="themeToggle"
+            onClick={() => setDarkMode((prev) => !prev)}
+          >
+            {darkMode ? "Light Mode" : "Dark Mode"}
+          </button>
+        </div>
+
         <SearchBox
           updateInfo={setWeatherInfo}
           onSearch={addRecentSearch}
@@ -59,6 +76,7 @@ export default function WeatherApp() {
           recentSearches={recentSearches}
           setRecentSearches={setRecentSearches}
         />
+
         <InfoBox info={weatherInfo} loading={loading} />
       </div>
     </div>
